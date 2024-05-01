@@ -1,0 +1,101 @@
+{
+    "metadata": {
+        "defaultName": "Бак для душа Акватек",
+        "description": "Бак для душа с подогревом и без",
+        "version": "1.0.0",
+        "author": "Владимир Сыроежкин"
+    },
+    "styleParameters": [
+        {
+            "name": "General",
+            "text": "General",
+            "params": [
+                {
+                    "name": "Material",
+                    "text": "Material",
+                    "type": "Id",
+                    "entityTypeId": "0abcb18f-0aaf-4509-bf89-5c5fad9d5d8b"
+                }
+            ]
+        },
+        {
+            "name": "Dimensions",
+            "text": "Габаритные размеры",
+            "params": [
+                {
+                    "name": "Width",
+                    "text": "Ширина",
+                    "type": "Length",
+                    "default": 950,
+                    "min": 1,
+                    "max": 1000000
+                },
+                {
+                    "name": "Height",
+                    "text": "Высота",
+                    "type": "Length",
+                    "default": 500,
+                    "min": 1,
+                    "max": 100000
+                },
+                {
+                    "name": "NeckDiameter",
+                    "text": "Диаметр горловины",
+                    "type": "Length",
+                    "default": 350,
+                    "min": 1,
+                    "max": 100000
+                },
+                {
+                    "name": "Module",
+                    "text": "Модуль",
+                    "type": "Length",
+                    "default": 50,
+                    "min": 1,
+                    "max": 100000
+                }
+            ]
+        },
+        {
+            "name": "Port",
+            "text": "Подача жидкости (вход)",
+            "params": [
+                {
+                    "name": "ConnectionType",
+                    "text": "Вид соединения",
+                    "type": "CoreEnum",
+                    "coreEnumType": "PipeConnectorType",
+                    "default": "Weld"
+                },
+                {
+                    "name": "ThreadSize",
+                    "text": "Номинальный диаметр",
+                    "type": "CoreEnum",
+                    "coreEnumType": "PipeThreadSize",
+                    "default": "D0_50"
+                },
+                {
+                    "name": "NominalDiameter",
+                    "text": "Номинальный диаметр",
+                    "type": "Length",
+                    "default": 20,
+                    "min": 1,
+                    "max": 1000000
+                }
+            ]
+        }
+    ],
+    "ports": [
+        {
+            "name": "Port",
+            "text": "Port",
+            "flowDirection": "InletAndOutlet",
+            "systemCategories": [
+                "DomesticColdWater",
+                "DomesticHotWater",
+                "Rainwater",
+                "OtherPipeSystem"
+            ]
+        }
+    ]
+}

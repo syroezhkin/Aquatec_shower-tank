@@ -1,0 +1,4 @@
+{
+  "workspace.library": ["./definitions"],
+  "runtime.version": "Lua 5.4.6"
+}
