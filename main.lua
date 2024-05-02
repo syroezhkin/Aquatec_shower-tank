@@ -30,6 +30,37 @@ function MakeTank(M, NeckDiameter, Width, Height)
 	})
 end
 
+function MakeSymbol(M, width, height)
+	local w = width / 2
+	local h = height / 2
+	local contour = CreateRectangle2D(Point2D(0, 0), 0, width, height)
+	local geometry = GeometrySet2D()
+
+	geometry:AddCurve(contour)
+	geometry:AddCurve(CreateLineSegment2D(Point2D(-w, -h + 4 * M), Point2D(w, -h + 4 * M)))
+	geometry:AddCurve(CreatePolyline2D({
+		Point2D(-3 * M, -h + M),
+		Point2D(0, -h + 3 * M),
+		Point2D(0, -h + M),
+		Point2D(3 * M, -h + 3 * M),
+	}))
+	geometry:AddCurve(CreatePolyline2D({
+		Point2D(3 * M - 1.2 * M, -h + 3 * M),
+		Point2D(3 * M, -h + 3 * M),
+		Point2D(3 * M - 0.5 * M, -h + 3 * M - 1.1 * M),
+	}))
+	geometry:AddMaterialColorSolidArea(FillArea(contour))
+
+	return geometry
+end
+
 local detailedGeometry = ModelGeometry()
 detailedGeometry:AddSolid(MakeTank(dimensions.Module, dimensions.NeckDiameter, dimensions.Width, dimensions.Height))
 Style.SetDetailedGeometry(detailedGeometry)
+
+local scale = 100
+local symbolGeometry = ModelGeometry()
+local geometryPlacement = Placement3D(Point3D(0, 0, 0), Vector3D(0, -1, 0), Vector3D(1, 0, 0))
+local geometry = MakeSymbol(dimensions.Module / scale, dimensions.Width / scale, dimensions.Height / scale)
+symbolGeometry:AddGeometrySet2D(geometry, geometryPlacement)
+Style.SetSymbolGeometry(symbolGeometry)

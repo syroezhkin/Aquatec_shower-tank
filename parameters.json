@@ -8,13 +8,19 @@
     "styleParameters": [
         {
             "name": "General",
-            "text": "General",
+            "text": "Общие",
             "params": [
                 {
                     "name": "Material",
                     "text": "Material",
                     "type": "Id",
                     "entityTypeId": "0abcb18f-0aaf-4509-bf89-5c5fad9d5d8b"
+                },
+                {
+                    "name" : "HeatingElement",
+                    "text" : "Электронагреватель (ТЭН)",
+                    "type" : "Boolean",
+                    "default" : true
                 }
             ]
         },
@@ -35,7 +41,7 @@
                     "text": "Высота",
                     "type": "Length",
                     "default": 500,
-                    "min": 1,
+                    "min": 250,
                     "max": 100000
                 },
                 {
@@ -57,8 +63,36 @@
             ]
         },
         {
-            "name": "Port",
+            "name": "ColdWater",
             "text": "Подача жидкости (вход)",
+            "params": [
+                {
+                    "name": "ConnectionType",
+                    "text": "Вид соединения",
+                    "type": "CoreEnum",
+                    "coreEnumType": "PipeConnectorType",
+                    "default": "Weld"
+                },
+                {
+                    "name": "ThreadSize",
+                    "text": "Номинальный диаметр",
+                    "type": "CoreEnum",
+                    "coreEnumType": "PipeThreadSize",
+                    "default": "D0_50"
+                },
+                {
+                    "name": "NominalDiameter",
+                    "text": "Номинальный диаметр",
+                    "type": "Length",
+                    "default": 20,
+                    "min": 1,
+                    "max": 1000000
+                }
+            ]
+        },
+        {
+            "name": "HotWater",
+            "text": "Подача жидкости (выход)",
             "params": [
                 {
                     "name": "ConnectionType",
@@ -87,14 +121,27 @@
     ],
     "ports": [
         {
-            "name": "Port",
-            "text": "Port",
-            "flowDirection": "InletAndOutlet",
+            "name": "ColdOrHotWaterInlet",
+            "text": "Бытовое холодное или горячее водоснабжение",
+            "flowDirection": "Inlet",
             "systemCategories": [
                 "DomesticColdWater",
-                "DomesticHotWater",
-                "Rainwater",
-                "OtherPipeSystem"
+                "DomesticHotWater"
+            ]
+        },
+        {
+            "name": "HotWaterOutlet",
+            "text": "Бытовое горячее водоснабжение",
+            "flowDirection": "Outlet",
+            "systemCategories": [
+                "DomesticHotWater"
+            ]
+        },
+        {
+            "name" : "PowerSupplyLine",
+            "text" : "Силовая линия",
+            "systemCategories" : [
+                "PowerCircuit"
             ]
         }
     ]
