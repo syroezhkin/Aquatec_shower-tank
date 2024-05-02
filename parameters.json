@@ -64,7 +64,7 @@
         },
         {
             "name": "ColdWater",
-            "text": "Подача жидкости (вход)",
+            "text": "Бытовое холодное водоснабжение (вход)",
             "params": [
                 {
                     "name": "ConnectionType",
@@ -92,7 +92,7 @@
         },
         {
             "name": "HotWater",
-            "text": "Подача жидкости (выход)",
+            "text": "Бытовое горячее водоснабжение (выход)",
             "params": [
                 {
                     "name": "ConnectionType",

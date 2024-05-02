@@ -1,6 +1,21 @@
 local parameters = Style.GetParameterValues()
 local dimensions = parameters.Dimensions
 
+function SetPipeParameters(port, portParameters)
+	local connectionType = portParameters.ConnectionType
+	if connectionType == PipeConnectorType.Thread then
+		port:SetPipeParameters(connectionType, portParameters.ThreadSize)
+	else
+		port:SetPipeParameters(connectionType, portParameters.NominalDiameter)
+	end
+end
+
+function HideIrrelevantPortParams(portName)
+	local isThread = Style.GetParameter(portName, "ConnectionType"):GetValue() == PipeConnectorType.Thread
+	Style.GetParameter(portName, "ThreadSize"):SetVisible(isThread)
+	Style.GetParameter(portName, "NominalDiameter"):SetVisible(not isThread)
+end
+
 function MakeBottom(M, Width)
 	return Subtract(
 		CreateRectangularPyramid(Width - 3 * M, Width - 3 * M, -1.25 * M):Shift(0, 0, -M),
@@ -54,13 +69,17 @@ function MakeSymbol(M, width, height)
 	return geometry
 end
 
+HideIrrelevantPortParams("ColdWater")
+HideIrrelevantPortParams("HotWater")
+
 local detailedGeometry = ModelGeometry()
 detailedGeometry:AddSolid(MakeTank(dimensions.Module, dimensions.NeckDiameter, dimensions.Width, dimensions.Height))
 Style.SetDetailedGeometry(detailedGeometry)
 
 local scale = 100
 local symbolGeometry = ModelGeometry()
-local geometryPlacement = Placement3D(Point3D(0, 0, 0), Vector3D(0, -1, 0), Vector3D(1, 0, 0))
+local geometryPlacement =
+	Placement3D(Point3D(0, 0, dimensions.Height / 2 / scale), Vector3D(0, -1, 0), Vector3D(1, 0, 0))
 local geometry = MakeSymbol(dimensions.Module / scale, dimensions.Width / scale, dimensions.Height / scale)
 symbolGeometry:AddGeometrySet2D(geometry, geometryPlacement)
 Style.SetSymbolGeometry(symbolGeometry)
