@@ -12,15 +12,9 @@
             "params": [
                 {
                     "name": "Material",
-                    "text": "Material",
+                    "text": "Материал",
                     "type": "Id",
                     "entityTypeId": "0abcb18f-0aaf-4509-bf89-5c5fad9d5d8b"
-                },
-                {
-                    "name" : "HeatingElement",
-                    "text" : "Электронагреватель (ТЭН)",
-                    "type" : "Boolean",
-                    "default" : true
                 }
             ]
         },

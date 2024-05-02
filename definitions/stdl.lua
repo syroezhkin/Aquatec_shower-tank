@@ -1,5 +1,8 @@
 ---@meta
 
+---@alias PipeConnectorType table
+PipeConnectorType = {}
+
 ---@alias Solid table
 Solid = {}
 

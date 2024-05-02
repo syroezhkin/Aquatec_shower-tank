@@ -69,6 +69,26 @@ function MakeSymbol(M, width, height)
 	return geometry
 end
 
+function MakeSymbolGeometry(scale, height, width, M)
+	local symbolGeometry = ModelGeometry()
+	local geometryPlacement = Placement3D(Point3D(0, 0, height / 2 / scale), Vector3D(1, 0, 0), Vector3D(1, 0, 0))
+	local geometry = MakeSymbol(M / scale, width / scale, height / scale)
+	symbolGeometry:AddGeometrySet2D(geometry, geometryPlacement)
+	return symbolGeometry
+end
+
+function SetPowerSupplinePort(M, width)
+	local place = Placement3D(Point3D(0, (width - M) / 2, -2 * M), Vector3D(0, 1, 0), Vector3D(-1, 0, 0))
+	local port = Style.GetPort("PowerSupplyLine")
+	port:SetPlacement(place)
+end
+
+function SetPipePort(portName, parameter, place)
+	local port = Style.GetPort(portName)
+	SetPipeParameters(port, parameter)
+	port:SetPlacement(place)
+end
+
 HideIrrelevantPortParams("ColdWater")
 HideIrrelevantPortParams("HotWater")
 
@@ -76,32 +96,16 @@ local detailedGeometry = ModelGeometry()
 detailedGeometry:AddSolid(MakeTank(dimensions.Module, dimensions.NeckDiameter, dimensions.Width, dimensions.Height))
 Style.SetDetailedGeometry(detailedGeometry)
 
-local scale = 75
-local symbolGeometry = ModelGeometry()
-local geometryPlacement =
-	Placement3D(Point3D(0, 0, dimensions.Height / 2 / scale), Vector3D(1, 0, 0), Vector3D(1, 0, 0))
-local geometry = MakeSymbol(dimensions.Module / scale, dimensions.Width / scale, dimensions.Height / scale)
-symbolGeometry:AddGeometrySet2D(geometry, geometryPlacement)
-Style.SetSymbolGeometry(symbolGeometry)
+Style.SetSymbolGeometry(MakeSymbolGeometry(75, dimensions.Height, dimensions.Width, dimensions.Module))
 
 local coldWaterPlace = Placement3D(
 	Point3D(0, -dimensions.Width / 2, dimensions.Height - 4 * dimensions.Module),
 	Vector3D(0, -1, 0),
 	Vector3D(1, 0, 0)
 )
-local coldWaterPort = Style.GetPort("ColdOrHotWaterInlet")
-SetPipeParameters(coldWaterPort, parameters.ColdWater)
-coldWaterPort:SetPlacement(coldWaterPlace)
-
 local hotWaterPlace = Placement3D(Point3D(0, 0, -2.5 * dimensions.Module), Vector3D(0, 0, -1), Vector3D(1, 0, 0))
-local hotWaterPort = Style.GetPort("HotWaterOutlet")
-SetPipeParameters(hotWaterPort, parameters.HotWater)
-hotWaterPort:SetPlacement(hotWaterPlace)
 
-local powerSupplyLinePlace = Placement3D(
-	Point3D(0, (dimensions.Width - dimensions.Module) / 2, -2 * dimensions.Module),
-	Vector3D(0, 1, 0),
-	Vector3D(-1, 0, 0)
-)
-local powerSupplyLinePort = Style.GetPort("PowerSupplyLine")
-powerSupplyLinePort:SetPlacement(powerSupplyLinePlace)
+SetPipePort("ColdOrHotWaterInlet", parameters.ColdWater, coldWaterPlace)
+SetPipePort("HotWaterOutlet", parameters.HotWater, hotWaterPlace)
+
+SetPowerSupplinePort(dimensions.Module, dimensions.Width)
