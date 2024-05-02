@@ -140,6 +140,7 @@
         {
             "name" : "PowerSupplyLine",
             "text" : "Силовая линия",
+            "flowDirection": "Inlet",
             "systemCategories" : [
                 "PowerCircuit"
             ]
