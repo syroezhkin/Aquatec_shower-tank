@@ -27,7 +27,7 @@
                     "text": "Ширина",
                     "type": "Length",
                     "default": 950,
-                    "min": 1,
+                    "min": 450,
                     "max": 1000000
                 },
                 {
