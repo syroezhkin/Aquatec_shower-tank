@@ -1,6 +1,6 @@
 default: view
 
-TARGET_FILE = Aquatec_shower-tank.rst
+TARGET_FILE = ./build/Aquatec_shower-tank.rst
 BUILDER = ../RengaSTDLSDK/RstBuilder/RstBuilder.exe
 VIEWER = ../RstViewer/RstViewer.exe
 
